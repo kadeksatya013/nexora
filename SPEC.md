@@ -5,9 +5,9 @@
 | Field | Nilai |
 |---|---|
 | Nama aplikasi | NEXORA |
-| Versi dokumen | 1.1 |
+| Versi dokumen | 1.2 |
 | Tanggal | 19 November 2026 |
-| Status | Implementasi selesai — dokumen diselaraskan dengan aplikasi (Revisi 1.1) |
+| Status | Implementasi selesai — dokumen diselaraskan dengan aplikasi (Revisi 1.2: filter harga & micro-interaksi) |
 | Target pengerjaan | Prototype dapat didemonstrasikan dalam **1 hari kerja (≈8 jam efektif)** |
 | Peran penulis | System Analyst + Software Engineer |
 | Platform | Web, satu perangkat, tanpa backend |
@@ -53,7 +53,7 @@ Aplikasi berjalan pada **satu perangkat** dan **tidak memiliki sistem autentikas
 | F-02 | Aset gambar lokal | Setiap produk memakai gambar lokal/placeholder lokal, tanpa request ke API eksternal |
 | F-03 | Informasi produk | Kartu & detail menampilkan nama, kategori, harga Rupiah, stok, deskripsi, gambar, status unggulan |
 | F-04 | Pencarian | Pencarian case-insensitive pada `nama`, `kategori`, dan `deskripsi`/kata kunci |
-| F-05 | Filter kategori | Filter: Semua + 6 kategori digital |
+| F-05 | Filter kategori & harga | Filter: Semua + 6 kategori digital; rentang harga: Semua harga, `< Rp100.000`, `Rp100.000–Rp300.000`, `> Rp300.000` |
 | F-06 | Sorting | 5 opsi: harga termurah, harga termahal, nama A–Z, nama Z–A, produk terbaru |
 | F-07 | Halaman detail | Tampilan lengkap satu produk berdasarkan `id`, bisa diakses lewat hash route |
 | F-08 | Tombol WhatsApp | Membuka `https://wa.me/<nomor>?text=...` berisi nama produk dan harga Rupiah |
@@ -273,6 +273,7 @@ Berikut **sengaja tidak dibuat** dalam prototype satu hari ini:
 - [x] **AC-13** Sorting `nama-asc`: pertama **Aurora Landing Page**; `nama-desc`: pertama **Panduan Desain Typography**.
 - [x] **AC-14** Sorting `terbaru`: pertama **Futuristic Mockup Bundle**; setelah menambah produk baru, produk tersebut menjadi yang pertama.
 - [x] **AC-15** Pencarian + filter + sorting dapat dikombinasikan dan hasilnya tetap konsisten.
+- [x] **Pemeriksaan tambahan F-05:** filter harga `< Rp100.000` → 2 produk, `Rp100.000–Rp300.000` → 4 produk, `> Rp300.000` → 2 produk; `Semua harga` → 8 produk.
 
 ### 9.3 Detail Produk & WhatsApp
 
@@ -306,6 +307,7 @@ Berikut **sengaja tidak dibuat** dalam prototype satu hari ini:
 - [x] **AC-34** Latar netral terang dengan aksen mint/teal, efek glassmorphism, dan hover halus terlihat konsisten di katalog, detail, dan dashboard.
 - [x] **AC-35** Navigasi keyboard (Tab/Enter) dapat mencapai kolom cari, filter, sorting, kartu, dan tombol aksi; fokus terlihat.
 - [x] **AC-36** Console browser tidak menampilkan error saat menjalankan seluruh alur di atas.
+- [x] **Pemeriksaan tambahan AC-34:** kartu masuk dengan stagger 45ms, gambar membesar saat hover, toast/dialog memiliki animasi masuk; semuanya dimatikan pada `prefers-reduced-motion: reduce`. Tombol `/` memfokuskan kolom cari ketika tidak ada input aktif.
 
 ---
 

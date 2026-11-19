@@ -5,11 +5,11 @@
 | Field | Nilai |
 |---|---|
 | Nama aplikasi | NEXORA |
-| Versi dokumen | 1.1 |
+| Versi dokumen | 1.2 |
 | Tanggal | 19 November 2026 |
-| Status | Implementasi selesai — tugas ditandai `[x]` dan diselaraskan dengan berkas aktual (Revisi 1.1) |
-| Sumber fungsi & data | `SPEC.md` v1.1 (F-01…F-13, AC-01…AC-36, N-01…N-15) |
-| Sumber UI | `UI-SPEC.md` v1.1 (D-01…D-05, A-01…A-16, Bagian 2–15) |
+| Status | Implementasi selesai — tugas ditandai `[x]` dan diselaraskan dengan berkas aktual (Revisi 1.2: filter harga & micro-interaksi) |
+| Sumber fungsi & data | `SPEC.md` v1.2 (F-01…F-13, AC-01…AC-36, N-01…N-15) |
+| Sumber UI | `UI-SPEC.md` v1.2 (D-01…D-05, A-01…A-16, Bagian 2–15) |
 | Target | 8 jam efektif (480 menit) untuk 1 hari demonstrasi |
 
 > **Catatan penting:** dokumen ini adalah catatan tugas yang **sudah direalisasikan**. Nama berkas pada tabel di bawah mengikuti struktur aktual aplikasi: `src/main.js` (router & event), `src/products.js` (data, kategori, format, ilustrasi SVG), `src/store.js` (state, validasi, localStorage), `src/ui.js` (seluruh render & escape HTML), `src/style.css` (semua design token), dan `public/assets/products/` (8 SVG produk). `SPEC.md` dan `UI-SPEC.md` telah diselaraskan dengan implementasi ini.
@@ -283,7 +283,7 @@ Alasan: komponen katalog dan dashboard membutuhkan data dari `src/products.js` +
 ---
 
 ### TSK-10 — Filter kategori `[x]`
-**Estimasi:** 15 mnt · **Dependensi:** TSK-09 · **Deskripsi:** Chip filter `Semua` + 6 kategori dengan state aktif.
+**Estimasi:** 15 mnt · **Dependensi:** TSK-09 · **Deskripsi:** Chip filter `Semua` + 6 kategori dengan state aktif, ditambah `<select>` rentang harga.
 
 **Acceptance criteria:**
 - [x] **AC-09:** `E-book` → 1 produk; `Website Template` → 2 produk.
@@ -292,6 +292,7 @@ Alasan: komponen katalog dan dashboard membutuhkan data dari `src/products.js` +
 - [x] Label chip `Preset` memiliki value `Preset Foto` (UI-SPEC D-01).
 - [x] Mobile: chip scroll horizontal, tidak terpotong; desktop: wrap.
 - [x] `role="group" aria-label="Filter kategori produk"` hadir.
+- [x] Filter harga: `Semua harga` / `< Rp100.000` / `Rp100.000–Rp300.000` / `> Rp300.000`; nilai internal `semua|di-bawah-100|100-300|di-atas-300`; `Reset filter` mengembalikan `semua`.
 
 **Berkas yang mungkin berubah:**
 
@@ -573,6 +574,8 @@ Alasan: komponen katalog dan dashboard membutuhkan data dari `src/products.js` +
 - [x] AC-36: console browser bersih.
 - [x] A-01…A-16 teruji, termasuk kontras tabel `UI-SPEC.md` §2.2 dan `Escape` pada drawer/dialog.
 - [x] Wireframe `UI-SPEC.md` §12.1–12.5 sesuai implementasi tanpa perubahan struktur besar.
+- [x] Micro-interaksi: stagger kartu, zoom gambar saat hover, animasi toast/dialog, orb hero, float empty state; semuanya mati pada `prefers-reduced-motion: reduce`.
+- [x] Shortcut `/` memfokuskan `#search-input` saat tidak ada input/textarea/select yang aktif.
 
 **Berkas yang mungkin berubah:**
 

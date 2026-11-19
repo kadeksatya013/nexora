@@ -25,6 +25,7 @@
   /* Warna semantik */
   --success: #16a34a;
   --warning: #d97706;
+  --star: #eab308;
   --danger: #dc2626;
   --focus: #059669;
 
@@ -426,8 +427,9 @@ p { margin: 0; }
 
 .sort { display: flex; align-items: center; gap: var(--space-2); }
 .sort > svg { width: 16px; height: 16px; color: var(--color-text-subtle); }
+.sort-price > svg { color: var(--accent-secondary-strong); }
 .sort select {
-  min-height: 40px;
+  min-height: 44px;
   padding-inline: var(--space-3);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
@@ -525,9 +527,10 @@ p { margin: 0; }
 .stat { display: grid; gap: var(--space-1); padding: var(--space-5); border: 1px solid var(--color-border); border-top: 2px solid var(--accent, var(--accent-primary-strong)); border-radius: var(--radius-lg); background: var(--color-surface-glass); }
 .stat-purple { --accent: var(--accent-primary-strong); }
 .stat-cyan { --accent: var(--accent-secondary-strong); }
-.stat-warning { --accent: var(--warning); }
+.stat-warning { --accent: var(--star); }
 .stat-success { --accent: var(--success); }
-.stat-icon svg { width: 20px; height: 20px; color: var(--accent); }
+.stat-icon svg { width: 18px; height: 18px; color: var(--accent); }
+.stat-warning .stat-icon svg { fill: var(--star); }
 .stat-value { font-family: var(--font-heading); font-size: 32px; font-weight: 700; line-height: 1.1; }
 .stat-label { color: var(--color-text-subtle); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
 
@@ -542,6 +545,8 @@ p { margin: 0; }
 .data-table th { position: sticky; top: 0; background: var(--color-surface-raised); color: var(--color-text-subtle); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
 .data-table tbody tr:hover { background: rgba(15, 23, 42, 0.04); }
 .data-table img { width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover; }
+.data-table .star-icon { display: inline-flex; color: var(--star); }
+.data-table .star-icon svg { width: 18px; height: 18px; fill: var(--star); }
 .data-table td:last-child { display: flex; gap: var(--space-2); }
 .data-table .icon-btn { min-width: 44px; min-height: 44px; }
 
@@ -551,6 +556,7 @@ p { margin: 0; }
 .row-main { display: grid; gap: 2px; min-width: 0; font-size: 13px; }
 .row-main strong { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .row-main .muted { font-size: 12px; }
+.star-text { color: var(--star); font-weight: 600; }
 .row-actions { display: flex; gap: var(--space-2); margin-left: auto; }
 .row-actions .icon-btn { min-width: 44px; min-height: 44px; }
 
@@ -602,7 +608,7 @@ p { margin: 0; }
 
 .toast-region { position: fixed; right: var(--space-4); bottom: var(--space-4); z-index: 100; display: grid; gap: var(--space-2); width: min(88vw, 320px); }
 .toast { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-2); padding: var(--space-3) var(--space-4); border: 1px solid var(--color-border); border-left-width: 3px; border-radius: var(--radius-md); background: var(--color-surface-raised); box-shadow: var(--shadow); font-size: 13px; }
-.toast-close { display: grid; place-items: center; flex: none; min-width: 32px; min-height: 32px; border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--color-text-subtle); cursor: pointer; }
+.toast-close { display: grid; place-items: center; flex: none; min-width: 44px; min-height: 44px; border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--color-text-subtle); cursor: pointer; }
 .toast-close:hover { color: var(--color-text); background: rgba(15, 23, 42, 0.06); }
 .toast-close svg { width: 14px; height: 14px; }
 .toast-success { border-left-color: var(--success); }
@@ -651,6 +657,45 @@ p { margin: 0; }
   .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6); }
   .hero-title { max-width: 18ch; }
 }
+
+/* ---------- Micro-interaksi ---------- */
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.product-card { animation: cardIn 420ms ease-out both; animation-delay: calc(var(--card-index, 0) * 45ms); }
+.card-media img { transition: transform var(--normal); }
+.card:hover .card-media img { transform: scale(1.04); }
+.card .btn svg { transition: transform var(--fast); }
+.card:hover .btn svg { transform: translateX(3px); }
+
+@keyframes orbFloat {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-14px, 10px, 0); }
+}
+.orb { animation: orbFloat 9s ease-in-out infinite alternate; }
+.orb-cyan { animation-duration: 11s; animation-direction: alternate-reverse; }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.toast { animation: toastIn 220ms ease-out both; }
+
+@keyframes dialogIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.form-dialog[open], .confirm-dialog[open] { animation: dialogIn 200ms ease-out both; }
+@keyframes backdropIn { from { opacity: 0; } to { opacity: 1; } }
+.form-dialog::backdrop, .confirm-dialog::backdrop { animation: backdropIn 200ms ease-out both; }
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.empty > svg { animation: floaty 2.6s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }

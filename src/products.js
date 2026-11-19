@@ -25,7 +25,23 @@ export const SORT_OPTIONS = [
   { value: 'nama-desc', label: 'Nama Z–A' },
 ];
 
+export const HARGA_OPTIONS = [
+  { value: 'semua', label: 'Semua harga' },
+  { value: 'di-bawah-100', label: '< Rp100.000' },
+  { value: '100-300', label: 'Rp100.000 – Rp300.000' },
+  { value: 'di-atas-300', label: '> Rp300.000' },
+];
+
 export const WA_NUMBER = '6280000000000';
+
+/** Filter rentang harga; batas bawah inklusif, batas atas inklusif. */
+export function cocokHarga(harga, rentang) {
+  const value = Number(harga) || 0;
+  if (rentang === 'di-bawah-100') return value < 100000;
+  if (rentang === '100-300') return value >= 100000 && value <= 300000;
+  if (rentang === 'di-atas-300') return value > 300000;
+  return true;
+}
 
 /** UI-SPEC §5.2: chip memakai label "Preset", nilai datanya tetap "Preset Foto". */
 const ALIAS_KATEGORI = { 'Preset Foto': 'Preset' };

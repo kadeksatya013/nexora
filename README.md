@@ -27,6 +27,8 @@ Hasil build ada di folder `dist/`. Path aset memakai base relatif sehingga folde
 - Tombol **Reset Data** di `#/dashboard` mengembalikan data ke 8 produk awal setelah konfirmasi.
 - Tombol WhatsApp memakai nomor demo fiktif `6280000000000`. Tidak ada pembayaran otomatis.
 - Gambar produk adalah 8 SVG lokal di `public/assets/products/nx-001.svg` … `nx-008.svg`; fallback inline dibuat dari `src/products.js`.
+- Katalog bisa difilter by kategori dan rentang harga; tekan `/` untuk langsung fokus ke kolom pencarian.
+- Micro-interaksi (stagger kartu, zoom gambar, animasi toast/dialog) otomatis dimatikan jika sistem mengatur `prefers-reduced-motion: reduce`.
 
 ## Struktur utama
 

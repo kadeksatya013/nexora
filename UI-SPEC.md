@@ -5,10 +5,10 @@
 | Field | Nilai |
 |---|---|
 | Nama aplikasi | NEXORA |
-| Versi dokumen | 1.1 |
+| Versi dokumen | 1.2 |
 | Tanggal | 19 November 2026 |
-| Status | Implementasi selesai — dokumen diselaraskan dengan tampilan aplikasi (Revisi 1.1) |
-| Dokumen terkait | `SPEC.md` v1.1 (sumber kebenaran fungsi & data) |
+| Status | Implementasi selesai — dokumen diselaraskan dengan tampilan aplikasi (Revisi 1.2: filter harga & micro-interaksi) |
+| Dokumen terkait | `SPEC.md` v1.2 (sumber kebenaran fungsi & data) |
 | Stack UI | Vite + JavaScript Vanilla + HTML5 + CSS3 |
 | Target | Prototype responsif, netral terang dengan aksen mint/teal, dapat didemonstrasikan 1 hari |
 
@@ -93,6 +93,7 @@ NEXORA dibayangkan sebagai **"katalog aset digital untuk kreator generasi baru"*
 | `--on-accent` | `#06231A` | Teks di atas gradient aksen |
 | `--success` | `#16A34A` | Stok tersedia, status sukses |
 | `--warning` | `#D97706` | Stok menipis (≤5) |
+| `--star` | `#EAB308` | Ikon bintang unggulan di dashboard |
 | `--danger` | `#DC2626` | Error validasi, stok habis, hapus |
 | `--focus` | `#059669` | Ring fokus keyboard |
 
@@ -178,6 +179,12 @@ Tidak ada `@font-face` atau berkas `woff2`; stack sistem di atas menjaga keterba
 | Transisi | `150ms ease-out` untuk warna/border, `240ms ease-out` untuk transform & card |
 | Hover movement | `translateY(-2px)` pada kartu; `translateY(-1px)` pada tombol |
 | Reduced motion | `@media (prefers-reduced-motion: reduce)` → `transition: none; animation: none; transform: none` |
+| Card entrance | `cardIn` 420ms ease-out, stagger 45ms per kartu via `--card-index` |
+| Image zoom | `.card:hover .card-media img` → `scale(1.04)`; panah `View Details` bergeser 3px |
+| Toast & dialog | `toastIn` 220ms, `dialogIn` 200ms, `backdropIn` 200ms |
+| Orb hero | `orbFloat` 9s/11s alternate, tidak menimpa teks |
+| Empty state | Ikon search `floaty` 2.6s |
+| Shortcut `/` | Fokus ke `#search-input` saat tidak ada input/textarea/select aktif |
 
 ### 2.7 Ikonografi
 
@@ -307,6 +314,17 @@ Tidak ada `@font-face` atau berkas `woff2`; stack sistem di atas menjaga keterba
 | Hover | Teks `--accent-secondary-strong`, border `--color-border-strong`, `translateY(-1px)` |
 | Mobile | `overflow-x: auto`, scroll-snap, chip tidak terpotong, scrollbar disembunyikan tapi tetap di-scroll |
 | A11y | `role="group" aria-label="Filter kategori produk"`; status aktif tidak hanya warna (ada `aria-pressed` + ikon centang kecil) |
+
+#### Filter Harga (tambahan F-05)
+
+| Aspek | Spesifikasi |
+|---|---|
+| Kontrol | `<select>` kedua di toolbar, bersebelahan dengan sort; ikon `layers` berwarna teal |
+| Opsi | `Semua harga` (default), `< Rp100.000`, `Rp100.000 – Rp300.000`, `> Rp300.000` |
+| Nilai internal | `semua`, `di-bawah-100`, `100-300`, `di-atas-300` |
+| Aturan | `< 100000`; `>= 100000 && <= 300000`; `> 300000` |
+| A11y | `<label for="harga-select">Rentang harga</label>` (sr-only) + `aria-label="Filter rentang harga"` |
+| Reset | Tombol `Reset filter` muncul saat rentang harga aktif dan mengembalikan `semua` |
 
 ### 5.3 Sorting
 
@@ -479,12 +497,13 @@ Kelola katalog NEXORA — semua data tersimpan di perangkat ini.
 |---|---|---|---:|
 | Total Produk | box | `--accent-primary-strong` | 8 |
 | Total Stok | layers | `--accent-secondary-strong` | 382 |
-| Produk Unggulan | star | `--warning` | 4 |
+| Produk Unggulan | star | `--star` (#EAB308) | 4 |
 | Jumlah Kategori | grid | `--success` | 6 |
 
 - Angka Space Grotesk 32/38 weight 700; label 12px uppercase.
 - Kartu glass, padding 20px, radius 16px, garis atas 2px sesuai aksen.
 - Nilai dihitung ulang otomatis setelah create/update/delete/reset (sesuai AC-31).
+- Ikon bintang dashboard (kartu stat & kolom tabel) memakai `--star` `#EAB308`, ukurannya 18px dan diisi (`fill`) agar tidak tampak kebesaran; teks `★ Unggulan` pada kartu baris mobile mengikuti warna yang sama.
 
 ### 9.3 Tabel Produk (Desktop)
 
@@ -611,7 +630,7 @@ Target: **WCAG 2.1 level AA** untuk alur utama.
 +----------------------------------------------------------------------------------------------+
 |  Jelajahi Katalog                                       Menampilkan 8 dari 8 produk           |
 |  Kategori: [Semua][Template Canva][Website Template][E-book][Preset][UI Kit][Digital Assets]  |
-|  Urutkan: [ Produk Terbaru ▾ ]                                          [ Reset filter ]     |
+|  Urutkan: [ Produk Terbaru ▾ ] [ Semua harga ▾ ]                        [ Reset filter ]     |
 +----------------------------------------------------------------------------------------------+
 |  +-------------------+ +-------------------+ +-------------------+ +-------------------+      |
 |  | [ IMG 16:9    ]   | | [ IMG 16:9    ]   | | [ IMG 16:9    ]   | | [ IMG 16:9    ]   |      |
@@ -861,7 +880,7 @@ UI NEXORA dinyatakan selesai jika:
 13. ✅ A-01…A-16 terpenuhi; fokus keyboard terlihat dan dialog/drawer bisa ditutup dengan `Escape`.
 14. ✅ Nol aset/CDN eksternal; satu-satunya URL keluar adalah `wa.me` setelah klik.
 15. ✅ `prefers-reduced-motion` dihormati dan animasi tidak melebihi 240ms.
-16. ✅ Konsisten dengan `SPEC.md` v1.1, termasuk penyesuaian D-01…D-05 yang sudah dicatat.
+16. ✅ Konsisten dengan `SPEC.md` v1.2, termasuk penyesuaian D-01…D-05 yang sudah dicatat.
 
 ---
 

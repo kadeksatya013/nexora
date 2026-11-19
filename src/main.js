@@ -3,7 +3,7 @@
  */
 
 import './style.css';
-import { KATEGORI, SORT_OPTIONS } from './products.js';
+import { KATEGORI, SORT_OPTIONS, cocokHarga } from './products.js';
 import {
   init,
   subscribe,
@@ -32,7 +32,7 @@ const app = document.querySelector('#main-content');
 const header = document.querySelector('#app-header');
 
 const state = {
-  filters: { search: '', kategori: 'Semua', sort: SORT_OPTIONS[0].value },
+  filters: { search: '', kategori: 'Semua', sort: SORT_OPTIONS[0].value, harga: 'semua' },
   route: parseHash(),
 };
 
@@ -52,7 +52,8 @@ function getVisible() {
     const haystack = `${product.nama} ${product.kategori} ${product.deskripsi}`.toLowerCase();
     const matchSearch = !query || haystack.includes(query);
     const matchCategory = state.filters.kategori === 'Semua' || product.kategori === state.filters.kategori;
-    return matchSearch && matchCategory;
+    const matchHarga = cocokHarga(product.harga, state.filters.harga);
+    return matchSearch && matchCategory && matchHarga;
   });
 
   const { sort } = state.filters;
@@ -205,7 +206,7 @@ document.addEventListener('click', (event) => {
     render();
     document.querySelector('#search-input')?.focus();
   } else if (action === 'reset-filter') {
-    state.filters = { search: '', kategori: 'Semua', sort: SORT_OPTIONS[0].value };
+    state.filters = { search: '', kategori: 'Semua', sort: SORT_OPTIONS[0].value, harga: 'semua' };
     render();
   } else if (action === 'open-form') {
     openForm(null);
@@ -246,6 +247,11 @@ document.addEventListener('input', (event) => {
 });
 
 document.addEventListener('change', (event) => {
+  if (event.target.id === 'harga-select') {
+    state.filters.harga = event.target.value;
+    render();
+    return;
+  }
   if (event.target.id !== 'sort-select') return;
   state.filters.sort = event.target.value;
   render();
@@ -289,6 +295,14 @@ document.addEventListener('submit', (event) => {
 });
 
 document.addEventListener('keydown', (event) => {
+  if (event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey) {
+    const tag = document.activeElement?.tagName;
+    if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
+      event.preventDefault();
+      document.querySelector('#search-input')?.focus();
+    }
+    return;
+  }
   if (event.key !== 'Escape') return;
   if (document.querySelector('#nav-drawer')?.hidden === false) setDrawer(false);
 });

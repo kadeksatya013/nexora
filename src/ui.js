@@ -6,6 +6,7 @@
 import {
   KATEGORI,
   SORT_OPTIONS,
+  HARGA_OPTIONS,
   WA_NUMBER,
   formatRupiah,
   labelKategori,
@@ -120,7 +121,9 @@ function renderControls(filters, total, shown) {
   }).join('');
 
   const options = SORT_OPTIONS.map((option) => `<option value="${option.value}"${filters.sort === option.value ? ' selected' : ''}>${option.label}</option>`).join('');
-  const hasFilter = Boolean(filters.search) || filters.kategori !== 'Semua' || filters.sort !== 'terbaru';
+  const harga = filters.harga ?? 'semua';
+  const hargaOptions = HARGA_OPTIONS.map((option) => `<option value="${option.value}"${harga === option.value ? ' selected' : ''}>${escapeHtml(option.label)}</option>`).join('');
+  const hasFilter = Boolean(filters.search) || filters.kategori !== 'Semua' || filters.sort !== 'terbaru' || harga !== 'semua';
 
   return `<div class="toolbar">
   <div class="chips" role="group" aria-label="Filter kategori produk">${chips}</div>
@@ -128,17 +131,20 @@ function renderControls(filters, total, shown) {
     <label class="sort" for="sort-select">${icon('grid')}<span class="sr-only">Urutkan</span>
       <select id="sort-select" aria-label="Urutkan produk">${options}</select>
     </label>
+    <label class="sort sort-price" for="harga-select">${icon('layers')}<span class="sr-only">Rentang harga</span>
+      <select id="harga-select" aria-label="Filter rentang harga">${hargaOptions}</select>
+    </label>
     <p class="result-count" aria-live="polite">Menampilkan ${shown} dari ${total} produk</p>
     <button type="button" class="btn btn-ghost btn-sm" data-action="reset-filter" ${hasFilter ? '' : 'hidden'}>Reset filter</button>
   </div>
 </div>`;
 }
 
-export function renderCard(product) {
+export function renderCard(product, index = 0) {
   const stock = stockInfo(product.stok);
-  return `<article class="card product-card">
+  return `<article class="card product-card" style="--card-index:${index}">
   <div class="card-media">
-    <img src="${escapeHtml(product.imageUrl)}" alt="Ilustrasi produk ${escapeHtml(product.nama)}" />
+    <img src="${escapeHtml(product.imageUrl)}" alt="Ilustrasi produk ${escapeHtml(product.nama)}" decoding="async" />
     ${product.unggulan ? `<span class="badge badge-featured">${icon('star')} Unggulan</span>` : ''}
     <span class="badge badge-category">${escapeHtml(labelKategori(product.kategori))}</span>
   </div>
@@ -165,7 +171,7 @@ function renderEmpty() {
 
 export function renderCatalog({ visible, total, filters, summary }) {
   const grid = visible.length
-    ? `<div class="grid" id="product-grid">${visible.map(renderCard).join('')}</div>`
+    ? `<div class="grid" id="product-grid">${visible.map((product, index) => renderCard(product, index)).join('')}</div>`
     : `<div id="product-grid">${renderEmpty()}</div>`;
 
   return `${renderHero(filters, summary)}
@@ -223,7 +229,7 @@ function renderRow(product) {
   const stock = stockInfo(product.stok);
   return `<article class="row-card">
   <img src="${escapeHtml(product.imageUrl)}" alt="" />
-  <div class="row-main"><strong>${escapeHtml(product.nama)}</strong><span class="muted">${escapeHtml(product.kategori)}${product.unggulan ? ' · ★ Unggulan' : ''}</span><span>${formatRupiah(product.harga)} · <span class="stock stock-${stock.tone}">${stock.label}</span></span></div>
+  <div class="row-main"><strong>${escapeHtml(product.nama)}</strong><span class="muted">${escapeHtml(product.kategori)}${product.unggulan ? ' · <span class="star-text">★ Unggulan</span>' : ''}</span><span>${formatRupiah(product.harga)} · <span class="stock stock-${stock.tone}">${stock.label}</span></span></div>
   <div class="row-actions"><button type="button" class="icon-btn" data-action="edit" data-id="${escapeHtml(product.id)}" aria-label="Edit ${escapeHtml(product.nama)}">${icon('edit')}</button><button type="button" class="icon-btn icon-btn-danger" data-action="delete" data-id="${escapeHtml(product.id)}" aria-label="Hapus ${escapeHtml(product.nama)}">${icon('trash')}</button></div>
 </article>`;
 }
@@ -266,7 +272,7 @@ export function renderDashboard({ products, summary }) {
       <thead><tr><th>Gambar</th><th>Nama</th><th>Kategori</th><th>Harga</th><th>Stok</th><th>Unggulan</th><th>Aksi</th></tr></thead>
       <tbody>${products.map((product) => {
         const stock = stockInfo(product.stok);
-        return `<tr><td><img src="${escapeHtml(product.imageUrl)}" alt="" /></td><td>${escapeHtml(product.nama)}</td><td>${escapeHtml(product.kategori)}</td><td>${formatRupiah(product.harga)}</td><td><span class="stock stock-${stock.tone}">${stock.label}</span></td><td>${product.unggulan ? icon('star') : '—'}</td><td><button type="button" class="icon-btn" data-action="edit" data-id="${escapeHtml(product.id)}" aria-label="Edit ${escapeHtml(product.nama)}">${icon('edit')}</button><button type="button" class="icon-btn icon-btn-danger" data-action="delete" data-id="${escapeHtml(product.id)}" aria-label="Hapus ${escapeHtml(product.nama)}">${icon('trash')}</button></td></tr>`;
+        return `<tr><td><img src="${escapeHtml(product.imageUrl)}" alt="" /></td><td>${escapeHtml(product.nama)}</td><td>${escapeHtml(product.kategori)}</td><td>${formatRupiah(product.harga)}</td><td><span class="stock stock-${stock.tone}">${stock.label}</span></td><td>${product.unggulan ? `<span class="star-icon">${icon('star')}</span>` : '—'}</td><td><button type="button" class="icon-btn" data-action="edit" data-id="${escapeHtml(product.id)}" aria-label="Edit ${escapeHtml(product.nama)}">${icon('edit')}</button><button type="button" class="icon-btn icon-btn-danger" data-action="delete" data-id="${escapeHtml(product.id)}" aria-label="Hapus ${escapeHtml(product.nama)}">${icon('trash')}</button></td></tr>`;
       }).join('')}</tbody>
     </table></div>
     <div class="row-list">${products.map(renderRow).join('')}</div>
