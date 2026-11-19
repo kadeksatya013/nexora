@@ -27,6 +27,7 @@ Hasil build ada di folder `dist/`. Path aset memakai base relatif sehingga folde
 - Tombol **Reset Data** di `#/dashboard` mengembalikan data ke 8 produk awal setelah konfirmasi.
 - Tombol WhatsApp memakai nomor demo fiktif `6280000000000`. Tidak ada pembayaran otomatis.
 - Gambar produk adalah 8 SVG lokal di `public/assets/products/nx-001.svg` … `nx-008.svg`; fallback inline dibuat dari `src/products.js`.
+- Ilustrasi dekoratif UI ada di `public/assets/illustrations/`: `hero-catalog.svg`, `empty-search.svg`, dan `dashboard-management.svg` — semuanya SVG lokal buatan sendiri.
 - Katalog bisa difilter by kategori dan rentang harga; tekan `/` untuk langsung fokus ke kolom pencarian.
 - Micro-interaksi (stagger kartu, zoom gambar, animasi toast/dialog) otomatis dimatikan jika sistem mengatur `prefers-reduced-motion: reduce`.
 
@@ -40,5 +41,7 @@ Hasil build ada di folder `dist/`. Path aset memakai base relatif sehingga folde
 | `src/store.js` | State, validasi, dan persistensi `localStorage` |
 | `src/ui.js` | Template/render seluruh tampilan |
 | `src/style.css` | Design token dan seluruh gaya visual |
+| `public/assets/products/` | 8 SVG ilustrasi produk |
+| `public/assets/illustrations/` | 3 SVG dekoratif hero, empty state, dashboard |
 
-Dokumen pendukung: `SPEC.md`, `TASKS.md`, dan `UI-SPEC.md`.
+Dokumen pendukung: `SPEC.md`, `TASKS.md`, dan `UI-SPEC.md` (semua v1.3).

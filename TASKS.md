@@ -5,14 +5,14 @@
 | Field | Nilai |
 |---|---|
 | Nama aplikasi | NEXORA |
-| Versi dokumen | 1.2 |
+| Versi dokumen | 1.3 |
 | Tanggal | 19 November 2026 |
-| Status | Implementasi selesai — tugas ditandai `[x]` dan diselaraskan dengan berkas aktual (Revisi 1.2: filter harga & micro-interaksi) |
-| Sumber fungsi & data | `SPEC.md` v1.2 (F-01…F-13, AC-01…AC-36, N-01…N-15) |
-| Sumber UI | `UI-SPEC.md` v1.2 (D-01…D-05, A-01…A-16, Bagian 2–15) |
+| Status | Implementasi selesai — tugas ditandai `[x]` dan diselaraskan dengan berkas aktual (Revisi 1.3: ilustrasi UI lokal) |
+| Sumber fungsi & data | `SPEC.md` v1.3 (F-01…F-13, AC-01…AC-36, N-01…N-15) |
+| Sumber UI | `UI-SPEC.md` v1.3 (D-01…D-05, A-01…A-16, Bagian 2–15) |
 | Target | 8 jam efektif (480 menit) untuk 1 hari demonstrasi |
 
-> **Catatan penting:** dokumen ini adalah catatan tugas yang **sudah direalisasikan**. Nama berkas pada tabel di bawah mengikuti struktur aktual aplikasi: `src/main.js` (router & event), `src/products.js` (data, kategori, format, ilustrasi SVG), `src/store.js` (state, validasi, localStorage), `src/ui.js` (seluruh render & escape HTML), `src/style.css` (semua design token), dan `public/assets/products/` (8 SVG produk). `SPEC.md` dan `UI-SPEC.md` telah diselaraskan dengan implementasi ini.
+> **Catatan penting:** dokumen ini adalah catatan tugas yang **sudah direalisasikan**. Nama berkas pada tabel di bawah mengikuti struktur aktual aplikasi: `src/main.js` (router & event), `src/products.js` (data, kategori, format, ilustrasi SVG), `src/store.js` (state, validasi, localStorage), `src/ui.js` (seluruh render & escape HTML), `src/style.css` (semua design token), `public/assets/products/` (8 SVG produk), dan `public/assets/illustrations/` (3 SVG dekoratif UI). `SPEC.md` dan `UI-SPEC.md` telah diselaraskan dengan implementasi ini.
 
 ---
 
@@ -175,13 +175,14 @@ Alasan: komponen katalog dan dashboard membutuhkan data dari `src/products.js` +
 ## M2 — Katalog
 
 ### TSK-05 — Aset gambar lokal & fallback `[x]`
-**Estimasi:** 15 mnt · **Dependensi:** TSK-02 · **Deskripsi:** Siapkan 8 SVG produk yang mengilustrasikan deskripsi tiap produk dan fallback inline untuk gambar gagal dimuat.
+**Estimasi:** 15 mnt · **Dependensi:** TSK-02 · **Deskripsi:** Siapkan 8 SVG produk, 3 SVG dekoratif UI (hero, empty state, dashboard), dan fallback inline untuk gambar gagal dimuat.
 
 **Acceptance criteria:**
 - [x] Tersedia `nx-001.svg` … `nx-008.svg` di `public/assets/products/` dengan ilustrasi sesuai deskripsi produk dan palet mint/teal di atas latar terang.
 - [x] Semua gambar dirujuk via path lokal `assets/products/...`, bukan URL eksternal.
 - [x] Jika file gambar gagal dimuat, muncul placeholder fallback; tidak ada ikon browser rusak.
 - [x] Ikon antarmuka berupa inline SVG lokal (search, star, edit, trash, WA, dll.).
+- [x] 3 SVG dekoratif tersedia di `public/assets/illustrations/` dan dirujuk via `assets/illustrations/...` (tanpa URL eksternal).
 - [x] Font `Inter`/`Space Grotesk` lokal opsional; jika tidak ada, fallback `system-ui` tetap terbaca.
 
 **Berkas yang mungkin berubah:**
@@ -189,6 +190,7 @@ Alasan: komponen katalog dan dashboard membutuhkan data dari `src/products.js` +
 | Berkas | Aksi | Catatan |
 |---|---|---|
 | `public/assets/products/nx-001.svg` … `nx-008.svg` | `[A]` | 8 file SVG ilustratif |
+| `public/assets/illustrations/*.svg` | `[A]` | 3 SVG dekoratif: hero, empty state, dashboard |
 | `src/ui.js` | `[B]` | Kumpulan inline SVG & fallback |
 | `src/main.js` | `[U]` | Handler `onerror` gambar |
 
@@ -218,12 +220,12 @@ Alasan: komponen katalog dan dashboard membutuhkan data dari `src/products.js` +
 ---
 
 ### TSK-07 — Hero section `[x]`
-**Estimasi:** 15 mnt · **Dependensi:** TSK-06 · **Deskripsi:** Bangun hero sesuai UI-SPEC Bagian 4 dengan dekorasi CSS murni.
+**Estimasi:** 15 mnt · **Dependensi:** TSK-06 · **Deskripsi:** Bangun hero sesuai UI-SPEC Bagian 4 dengan dekorasi orb/grid CSS + ilustrasi SVG lokal.
 
 **Acceptance criteria:**
 - [x] Eyebrow, headline `Temukan Aset Digital untuk Karya Berikutnya.`, deskripsi, search bar, tombol `Explore Products →`, dan meta `8 produk • 6 kategori • 100% lokal` tampil.
 - [x] Dekorasi orb/grid memakai CSS `radial-gradient`, `aria-hidden="true"`, `pointer-events: none`.
-- [x] Di mobile dekorasi disembunyikan (`display: none`) dan headline tetap menjadi elemen pertama yang dibaca.
+- [x] Ilustrasi `hero-catalog.svg` tampil di kanan panel (`aria-hidden`, `pointer-events: none`); di mobile diredupkan jadi latar `opacity .22`, headline tetap pertama dibaca.
 - [x] Tombol `Explore Products` menggulir ke `#katalog` dan fokus ke chip `Semua`.
 
 **Berkas yang mungkin berubah:**
@@ -381,6 +383,7 @@ Alasan: komponen katalog dan dashboard membutuhkan data dari `src/products.js` +
 - [x] Angka dihitung dari state produk, bukan hardcode; berubah otomatis setelah create/update/delete/reset.
 - [x] Jumlah kategori = kategori unik yang dipakai produk; 4 aksen kartu sesuai UI-SPEC.
 - [x] Stat 4 kolom desktop, 2 kolom mobile.
+- [x] Ilustrasi `dashboard-management.svg` tampil di samping aksi pada ≥1024px, disembunyikan di layar lebih kecil agar tombol tidak terdesak.
 
 **Berkas yang mungkin berubah:**
 
@@ -574,7 +577,7 @@ Alasan: komponen katalog dan dashboard membutuhkan data dari `src/products.js` +
 - [x] AC-36: console browser bersih.
 - [x] A-01…A-16 teruji, termasuk kontras tabel `UI-SPEC.md` §2.2 dan `Escape` pada drawer/dialog.
 - [x] Wireframe `UI-SPEC.md` §12.1–12.5 sesuai implementasi tanpa perubahan struktur besar.
-- [x] Micro-interaksi: stagger kartu, zoom gambar saat hover, animasi toast/dialog, orb hero, float empty state; semuanya mati pada `prefers-reduced-motion: reduce`.
+- [x] Micro-interaksi: stagger kartu, zoom gambar saat hover, animasi toast/dialog, orb & ilustrasi hero, float empty state & ilustrasi dashboard; semuanya mati pada `prefers-reduced-motion: reduce`.
 - [x] Shortcut `/` memfokuskan `#search-input` saat tidak ada input/textarea/select yang aktif.
 
 **Berkas yang mungkin berubah:**

@@ -5,9 +5,9 @@
 | Field | Nilai |
 |---|---|
 | Nama aplikasi | NEXORA |
-| Versi dokumen | 1.2 |
+| Versi dokumen | 1.3 |
 | Tanggal | 19 November 2026 |
-| Status | Implementasi selesai — dokumen diselaraskan dengan aplikasi (Revisi 1.2: filter harga & micro-interaksi) |
+| Status | Implementasi selesai — dokumen diselaraskan dengan aplikasi (Revisi 1.3: ilustrasi UI lokal) |
 | Target pengerjaan | Prototype dapat didemonstrasikan dalam **1 hari kerja (≈8 jam efektif)** |
 | Peran penulis | System Analyst + Software Engineer |
 | Platform | Web, satu perangkat, tanpa backend |
@@ -50,7 +50,7 @@ Aplikasi berjalan pada **satu perangkat** dan **tidak memiliki sistem autentikas
 | ID | Fitur | Deskripsi Singkat |
 |---|---|---|
 | F-01 | Katalog awal | Menampilkan tepat 8 produk digital contoh saat pertama kali dibuka |
-| F-02 | Aset gambar lokal | Setiap produk memakai gambar lokal/placeholder lokal, tanpa request ke API eksternal |
+| F-02 | Aset gambar lokal | Setiap produk **dan ilustrasi dekoratif UI** memakai SVG lokal/placeholder lokal, tanpa request ke API eksternal |
 | F-03 | Informasi produk | Kartu & detail menampilkan nama, kategori, harga Rupiah, stok, deskripsi, gambar, status unggulan |
 | F-04 | Pencarian | Pencarian case-insensitive pada `nama`, `kategori`, dan `deskripsi`/kata kunci |
 | F-05 | Filter kategori & harga | Filter: Semua + 6 kategori digital; rentang harga: Semua harga, `< Rp100.000`, `Rp100.000–Rp300.000`, `> Rp300.000` |
@@ -186,7 +186,7 @@ Halo NEXORA, saya tertarik dengan *${nama}* (${formatRupiah(harga)}). Apakah sto
 | N-04 | Keamanan | Data dari `localStorage` dan input pengguna wajib di-escape (`textContent` atau `escapeHtml`). Dilarang menyisipkan string pengguna langsung ke `innerHTML` |
 | N-05 | Jaringan | Nol request eksternal saat aplikasi berjalan, kecuali navigasi ke `wa.me` setelah klik tombol. Tidak ada CDN untuk gambar maupun font |
 | N-06 | Font | Font stack `Inter`/`Space Grotesk` dengan fallback `system-ui, -apple-system, Segoe UI, sans-serif`; tanpa `@font-face`, berkas woff2, atau Google Fonts CDN |
-| N-07 | Gambar | 8 file SVG lokal di `public/assets/products/nx-001.svg` … `nx-008.svg`; tiap ilustrasi menggambarkan deskripsi produknya. Jika gagal dimuat, tampilkan fallback SVG inline buatan sendiri |
+| N-07 | Gambar | 8 file SVG produk di `public/assets/products/nx-001.svg` … `nx-008.svg` + 3 SVG dekoratif di `public/assets/illustrations/` (`hero-catalog.svg`, `empty-search.svg`, `dashboard-management.svg`). Semua buatan sendiri, lokal, tanpa CDN. Jika gambar produk gagal dimuat, tampilkan fallback SVG inline buatan sendiri |
 | N-08 | Performa | Render awal katalog 8 produk < 2 detik di browser desktop standar; ukuran bundle kecil; tanpa animasi berat |
 | N-09 | Responsif | Layout nyaman di desktop (≥1024px), tablet (768–1023px), dan mobile (<768px). Grid kartu 4/3/2/1 kolom menyesuaikan; navigasi tidak overflow |
 | N-10 | UI/UX | Tampilan terang netral: latar `#FFFFFF`, surface `#F4F6F5`, teks `#101116`; dua aksen mint `#10B981` dan teal `#14B8A6` dengan gradient `#5CE7A8 → #4ADABF`; glassmorphism; hover & transisi halus (150–250ms) |
@@ -259,6 +259,7 @@ Berikut **sengaja tidak dibuat** dalam prototype satu hari ini:
 - [x] **AC-02** Nama produk yang tampil sesuai 8 baris di Bagian 4.3.
 - [x] **AC-03** Setiap kartu menampilkan gambar lokal, nama, kategori, harga format `Rp...`, stok, dan badge unggulan untuk 4 produk yang ditandai.
 - [x] **AC-04** Tidak ada permintaan jaringan ke domain eksternal pada tab Network saat halaman dimuat (kecuali dokumen lokal).
+- [x] **Pemeriksaan tambahan F-02:** ilustrasi hero, empty state, dan header dashboard dimuat dari `assets/illustrations/*.svg` (lokal); jumlah request eksternal tetap nol.
 
 ### 9.2 Pencarian, Filter, Sorting
 

@@ -5,10 +5,10 @@
 | Field | Nilai |
 |---|---|
 | Nama aplikasi | NEXORA |
-| Versi dokumen | 1.2 |
+| Versi dokumen | 1.3 |
 | Tanggal | 19 November 2026 |
-| Status | Implementasi selesai — dokumen diselaraskan dengan tampilan aplikasi (Revisi 1.2: filter harga & micro-interaksi) |
-| Dokumen terkait | `SPEC.md` v1.2 (sumber kebenaran fungsi & data) |
+| Status | Implementasi selesai — dokumen diselaraskan dengan tampilan aplikasi (Revisi 1.3: ilustrasi UI lokal) |
+| Dokumen terkait | `SPEC.md` v1.3 (sumber kebenaran fungsi & data) |
 | Stack UI | Vite + JavaScript Vanilla + HTML5 + CSS3 |
 | Target | Prototype responsif, netral terang dengan aksen mint/teal, dapat didemonstrasikan 1 hari |
 
@@ -58,7 +58,7 @@ NEXORA dibayangkan sebagai **"katalog aset digital untuk kreator generasi baru"*
 
 1. Gunakan token CSS, bukan warna/literal angka yang diulang.
 2. Semua data dinamis di-escape (`textContent` / helper `escapeHtml`).
-3. Gambar produk memakai `assets/products/nx-00X.svg` lokal dengan fallback.
+3. Gambar produk memakai `assets/products/nx-00X.svg` lokal dengan fallback; ilustrasi dekoratif memakai `assets/illustrations/*.svg` lokal.
 4. Ikon memakai inline SVG lokal, bukan font/icon CDN.
 5. Tombol memiliki target sentuh minimal **44×44px**.
 6. Fokus keyboard selalu terlihat (ring mint 2px, offset 2px).
@@ -183,7 +183,9 @@ Tidak ada `@font-face` atau berkas `woff2`; stack sistem di atas menjaga keterba
 | Image zoom | `.card:hover .card-media img` → `scale(1.04)`; panah `View Details` bergeser 3px |
 | Toast & dialog | `toastIn` 220ms, `dialogIn` 200ms, `backdropIn` 200ms |
 | Orb hero | `orbFloat` 9s/11s alternate, tidak menimpa teks |
-| Empty state | Ikon search `floaty` 2.6s |
+| Ilustrasi hero | `heroDrift` 8s alternate (`translateY(-50%)` → `-53%`); SVG lokal, `aria-hidden` |
+| Empty state | Ilustrasi `empty-search.svg` `floaty` 2.6s (ikon SVG inline tetap 42px di empty page) |
+| Ilustrasi dashboard | `dashboard-management.svg` `floaty` 3.4s, tampil ≥1024px |
 | Shortcut `/` | Fokus ke `#search-input` saat tidak ada input/textarea/select aktif |
 
 ### 2.7 Ikonografi
@@ -266,15 +268,15 @@ Tidak ada `@font-face` atau berkas `woff2`; stack sistem di atas menjaga keterba
   │   preset, dan UI kit — siap pakai dalam hitungan menit."
   ├─ baris aksi: [ SearchBar .......... ] [ Explore Products → ]
   └─ meta: "8 produk  •  6 kategori  •  100% lokal"
-  [ kanan: dekorasi orb + grid CSS murni, aria-hidden="true" ]
+  [ kanan: dekorasi orb + grid CSS + hero-catalog.svg, aria-hidden="true" ]
 ```
 
 ### 4.2 Perilaku
 
 - Search bar di hero **terhubung langsung** ke state pencarian katalog; mengetik langsung menyaring daftar di bawahnya (live filter). Tombol `Explore Products` yang menggulir ke katalog; `Enter` di input tidak ditangani khusus.
 - Tombol **Explore Products** membuka `#/explore`, lalu fokus & scroll halus ke chip filter "Semua".
-- Dekorasi memakai CSS (`radial-gradient`, grid linear, blur), **bukan gambar eksternal**, dan `pointer-events: none`.
-- Di mobile dekorasi disembunyikan (`display: none`) agar headline tetap pertama dibaca.
+- Dekorasi orb/grid memakai CSS (`radial-gradient`, grid linear, blur); ilustrasi `assets/illustrations/hero-catalog.svg` adalah SVG lokal, **bukan gambar eksternal**, keduanya `pointer-events: none` dan `aria-hidden="true"`.
+- Ilustrasi hero berada di kanan panel: `opacity 1` desktop, `0.9` tablet, dan `0.22` di mobile sebagai latar redup; headline tetap pertama dibaca.
 
 ### 4.3 Microcopy
 
@@ -390,13 +392,15 @@ Tidak ada `@font-face` atau berkas `woff2`; stack sistem di atas menjaga keterba
 ### 6.4 Empty State Katalog
 
 ```text
-   [ ikon search besar, opacity .5 ]
+   [ empty-search.svg: kartu + kaca pembesar, 132px ]
         Tidak ada produk yang cocok
    Coba kata kunci lain atau reset filter kategori.
           [ Reset filter ]
 ```
 
-- Teks `--color-text-muted`, judul `--color-text`, ikon dekoratif `aria-hidden`.
+- Teks `--color-text-muted`, judul `--color-text`, ilustrasi dekoratif `aria-hidden="true"`.
+- Ilustrasi memakai `assets/illustrations/empty-search.svg`, lebar 132px (`max-width: 60%`), animasi `floaty` 2.6s.
+- Halaman “Produk tidak ditemukan” tetap memakai ikon inline 42px (bukan SVG dekoratif).
 - Kontainer tetap glass dengan padding 32px, min-height 240px.
 
 ---
@@ -483,11 +487,12 @@ Jika `id` tidak ditemukan: tampilkan panel glass bertuliskan `Produk tidak ditem
 ### 9.1 Header Dashboard
 
 ```text
-Dashboard Pengelola                    [ + Tambah Produk ] [ Reset Data ]
+Dashboard Pengelola       [ dashboard-management.svg ] [ + Tambah Produk ] [ Reset Data ]
 Kelola katalog NEXORA — semua data tersimpan di perangkat ini.
 ```
 
 - Badge `DEMO` di sebelah judul sebagai pengingat tanpa login.
+- Ilustrasi `assets/illustrations/dashboard-management.svg` (lebar 180px, `aria-hidden="true"`) tampil hanya di ≥1024px; di layar lebih kecil disembunyikan agar tombol tidak terdesak.
 - Tombol `Tambah Produk` memakai primary gradient.
 - Tombol `Reset Data` memakai ghost dengan ikon rotate; hover memakai `--color-border-strong`, bukan danger.
 
@@ -618,8 +623,8 @@ Target: **WCAG 2.1 level AA** untuk alur utama.
 |  +----------------------------------------------------------------------------------------+  |
 |  | ✦ KATALOG ASET DIGITAL · EDISI 2026                          (glow mint)     (glow teal)|  |
 |  |                                                                                        |  |
-|  |  Temukan Aset Digital                                        ~ grid halus ~             |  |
-|  |  untuk Karya Berikutnya.                                     ~ orb kaca ~               |  |
+|  |  Temukan Aset Digital                                        [hero-catalog.svg]         |  |
+|  |  untuk Karya Berikutnya.                                     ~ grid + orb kaca ~        |  |
 |  |                                                                                        |  |
 |  |  8 produk digital pilihan — template, e-book, preset, dan UI kit — siap pakai          |  |
 |  |  dalam hitungan menit.                                                                  |  |
@@ -655,7 +660,7 @@ Target: **WCAG 2.1 level AA** untuk alur utama.
 | ◈ NEXORA                     [ ☰ ]   |
 +--------------------------------------+
 |  ✦ KATALOG ASET DIGITAL 2026         |
-|                                      |
+|  ~ ilustrasi hero redup di kanan ~    |
 |  Temukan Aset                        |
 |  Digital untuk                       |
 |  Karya Berikutnya.                   |
@@ -674,7 +679,7 @@ Target: **WCAG 2.1 level AA** untuk alur utama.
 | Jelajahi Katalog      8 dari 8       |
 | Kategori (geser →)                   |
 | [Semua][Canva][Website][E-book]...   |
-| Urutkan: [ Produk Terbaru ▾        ] |
+| Urutkan: [ Terbaru ▾ ][ Semua harga ▾]|
 +--------------------------------------+
 | +----------------------------------+ |
 | | [      IMG 16:9               ]  | |
@@ -733,7 +738,7 @@ Target: **WCAG 2.1 level AA** untuk alur utama.
 +----------------------------------------------------------------------------------------------+
 | ◈ NEXORA   Home   Explore   Categories  [Dashboard]                    [DEMO]  [+ Tambah]    |
 +----------------------------------------------------------------------------------------------+
-|  Dashboard Pengelola                          [ + Tambah Produk ]  [ ⟲ Reset Data ]           |
+|  Dashboard Pengelola   [dashboard-mgmt.svg]   [ + Tambah Produk ]  [ ⟲ Reset Data ]           |
 |  Kelola katalog NEXORA — semua data tersimpan di perangkat ini.                                |
 +----------------------------------------------------------------------------------------------+
 |  +-------------------+ +-------------------+ +-------------------+ +-------------------+       |
@@ -879,11 +884,11 @@ UI NEXORA dinyatakan selesai jika:
 12. ✅ Diuji di viewport 375px dan 1280px: tidak ada overflow horizontal di `<body>`, teks tidak terpotong.
 13. ✅ A-01…A-16 terpenuhi; fokus keyboard terlihat dan dialog/drawer bisa ditutup dengan `Escape`.
 14. ✅ Nol aset/CDN eksternal; satu-satunya URL keluar adalah `wa.me` setelah klik.
-15. ✅ `prefers-reduced-motion` dihormati dan animasi tidak melebihi 240ms.
-16. ✅ Konsisten dengan `SPEC.md` v1.2, termasuk penyesuaian D-01…D-05 yang sudah dicatat.
+15. ✅ `prefers-reduced-motion` dihormati; transisi ≤240ms, animasi dekoratif masuk paling lama 420ms (card entrance).
+16. ✅ Konsisten dengan `SPEC.md` v1.3, termasuk penyesuaian D-01…D-05 yang sudah dicatat.
 
 ---
 
 ## 16. Catatan Penyerahan
 
-Dokumen ini adalah spesifikasi UI yang **telah diselaraskan dengan implementasi akhir**. Token warna, microcopy, dan delapan ilustrasi produk mengikuti aplikasi yang berjalan. `SPEC.md` tetap menjadi acuan logika/data; penyimpangan visual selanjutnya dicatat sebagai revisi versi.
+Dokumen ini adalah spesifikasi UI yang **telah diselaraskan dengan implementasi akhir**. Token warna, microcopy, delapan ilustrasi produk, dan tiga ilustrasi dekoratif (`hero-catalog`, `empty-search`, `dashboard-management`) mengikuti aplikasi yang berjalan. `SPEC.md` tetap menjadi acuan logika/data; penyimpangan visual selanjutnya dicatat sebagai revisi versi.

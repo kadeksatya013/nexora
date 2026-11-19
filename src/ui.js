@@ -109,7 +109,10 @@ function renderHero(filters, summary) {
       </div>
       <p class="hero-meta">${summary.total} produk • ${summary.kategori} kategori • 100% lokal</p>
     </div>
-    <div class="hero-art" aria-hidden="true"><span class="orb orb-purple"></span><span class="orb orb-cyan"></span><span class="hero-grid"></span></div>
+    <div class="hero-art" aria-hidden="true">
+      <span class="orb orb-purple"></span><span class="orb orb-cyan"></span><span class="hero-grid"></span>
+      <img class="hero-illustration" src="assets/illustrations/hero-catalog.svg" alt="" />
+    </div>
   </div>
 </section>`;
 }
@@ -162,7 +165,7 @@ export function renderCard(product, index = 0) {
 
 function renderEmpty() {
   return `<div class="empty">
-  ${icon('search')}
+  <img class="empty-illustration" src="assets/illustrations/empty-search.svg" alt="" aria-hidden="true" />
   <h3>Tidak ada produk yang cocok</h3>
   <p>Coba kata kunci lain atau reset filter kategori.</p>
   <button type="button" class="btn btn-secondary" data-action="reset-filter">Reset filter</button>
@@ -258,7 +261,10 @@ export function renderDashboard({ products, summary }) {
   return `<section class="container section dashboard">
   <div class="dashboard-head">
     <div><span class="badge badge-demo">DEMO</span><h1>Dashboard Pengelola</h1><p class="muted">Kelola katalog NEXORA — semua data tersimpan di perangkat ini.</p></div>
-    <div class="dashboard-actions"><button type="button" class="btn btn-primary" data-action="open-form">${icon('plus')} Tambah Produk</button><button type="button" class="btn btn-ghost" data-action="reset-data">${icon('reset')} Reset Data</button></div>
+    <div class="dashboard-aside">
+      <img class="dashboard-illustration" src="assets/illustrations/dashboard-management.svg" alt="" aria-hidden="true" />
+      <div class="dashboard-actions"><button type="button" class="btn btn-primary" data-action="open-form">${icon('plus')} Tambah Produk</button><button type="button" class="btn btn-ghost" data-action="reset-data">${icon('reset')} Reset Data</button></div>
+    </div>
   </div>
   <div class="stats">
     ${renderStat('Total Produk', summary.total, 'box', 'purple')}
