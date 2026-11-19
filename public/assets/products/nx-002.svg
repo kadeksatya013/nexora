@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7FAF9"/><stop offset="1" stop-color="#EEF4F2"/></linearGradient></defs>
+<rect width="800" height="450" fill="url(#g)"/>
+<g stroke="#14B8A6" stroke-opacity=".14" stroke-width="1"><line x1="100" y1="0" x2="100" y2="450"/><line x1="200" y1="0" x2="200" y2="450"/><line x1="300" y1="0" x2="300" y2="450"/><line x1="400" y1="0" x2="400" y2="450"/><line x1="500" y1="0" x2="500" y2="450"/><line x1="600" y1="0" x2="600" y2="450"/><line x1="700" y1="0" x2="700" y2="450"/><line x1="800" y1="0" x2="800" y2="450"/><line x1="0" y1="90" x2="800" y2="90"/><line x1="0" y1="180" x2="800" y2="180"/><line x1="0" y1="270" x2="800" y2="270"/><line x1="0" y1="360" x2="800" y2="360"/></g>
+<g>
+    <rect x="150" y="48" width="500" height="272" rx="16" fill="#ffffff" stroke="#14B8A6" stroke-width="3"/>
+    <path d="M150 92H650" stroke="#14B8A6" stroke-opacity=".25" stroke-width="2"/>
+    <g fill="#14B8A6" opacity=".55"><circle cx="176" cy="70" r="6"/><circle cx="198" cy="70" r="6"/><circle cx="220" cy="70" r="6"/></g>
+    <rect x="242" y="62" width="180" height="16" rx="8" fill="#E6F4F0"/>
+    <defs><clipPath id="win"><rect x="150" y="92" width="500" height="228"/></clipPath></defs>
+    <g clip-path="url(#win)">
+      <rect x="150" y="92" width="500" height="228" fill="#F5FCFA"/>
+      <path d="M150 250 C260 170 330 286 440 206 S570 154 650 214 V320 H150Z" fill="#14B8A6" opacity=".2"/>
+      <path d="M150 278 C250 214 350 314 460 236 S580 196 650 246 V320 H150Z" fill="#2DD4BF" opacity=".24"/>
+    </g>
+    <rect x="188" y="130" width="190" height="14" rx="7" fill="#0F766E" opacity=".8"/>
+    <rect x="188" y="156" width="140" height="14" rx="7" fill="#0F766E" opacity=".45"/>
+    <rect x="188" y="196" width="96" height="34" rx="17" fill="#14B8A6"/>
+    <text x="236" y="218" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#ffffff">Launch</text>
+    <rect x="544" y="118" width="80" height="166" rx="14" fill="#ffffff" stroke="#14B8A6" stroke-width="3"/>
+    <rect x="552" y="132" width="64" height="48" rx="6" fill="#14B8A6" opacity=".2"/>
+    <path d="M554 194h60M554 210h44M554 226h56" stroke="#0F766E" stroke-opacity=".45" stroke-width="5" stroke-linecap="round"/>
+    <rect x="566" y="264" width="36" height="12" rx="6" fill="#14B8A6"/></g>
+<text x="400" y="386" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="38" font-weight="700" fill="#0F172A">Aurora Landing Page</text>
+<text x="400" y="420" text-anchor="middle" font-family="Inter, sans-serif" font-size="19" fill="#64748B">NEXORA · ASET DIGITAL</text>
+</svg>

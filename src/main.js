@@ -3,7 +3,7 @@
  */
 
 import './style.css';
-import { SORT_OPTIONS } from './products.js';
+import { KATEGORI, SORT_OPTIONS } from './products.js';
 import {
   init,
   subscribe,
@@ -60,7 +60,9 @@ function getVisible() {
   if (sort === 'harga-desc') visible.sort((a, b) => b.harga - a.harga || a.id.localeCompare(b.id));
   if (sort === 'nama-asc') visible.sort((a, b) => a.nama.localeCompare(b.nama, 'id') || a.id.localeCompare(b.id));
   if (sort === 'nama-desc') visible.sort((a, b) => b.nama.localeCompare(a.nama, 'id') || a.id.localeCompare(b.id));
-  if (sort === 'terbaru') visible.sort((a, b) => b.createdAt.localeCompare(a.createdAt) || b.id.localeCompare(a.id));
+  if (sort === 'terbaru') {
+    visible.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || '') || String(b.id || '').localeCompare(String(a.id || '')));
+  }
 
   return { visible, total: all.length };
 }
@@ -165,7 +167,7 @@ function openForm(product) {
   if (title) title.textContent = product ? 'Edit Produk' : 'Tambah Produk';
 
   setField(dialog, 'nama', product?.nama ?? '');
-  setField(dialog, 'kategori', product?.kategori ?? 'Template Canva');
+  setField(dialog, 'kategori', product?.kategori ?? KATEGORI[0]);
   setField(dialog, 'harga', product?.harga ?? '');
   setField(dialog, 'stok', product?.stok ?? '');
   setField(dialog, 'deskripsi', product?.deskripsi ?? '');

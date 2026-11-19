@@ -5,6 +5,7 @@
 
 import { KATEGORI, buildProduct, createSeedProducts } from './products.js';
 
+// Sesuai SPEC.md §4.2: key dan versi penyimpanan lokal.
 export const STORAGE_KEY = 'nexora.catalog.v1';
 const VERSION = 1;
 

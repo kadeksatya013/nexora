@@ -12,7 +12,7 @@ import {
   makePlaceholder,
 } from './products.js';
 
-export const FALLBACK_IMAGE = makePlaceholder('NEXORA', '#22D3EE');
+export const FALLBACK_IMAGE = makePlaceholder('NEXORA', '#14B8A6');
 
 export function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, (char) => ({
@@ -104,7 +104,7 @@ function renderHero(filters, summary) {
           <input id="search-input" type="search" placeholder='Cari nama atau kata kunci, mis. "UI Kit"...' value="${escapeHtml(filters.search)}" aria-controls="product-grid" autocomplete="off" />
           <button class="search-clear" type="button" data-action="clear-search" aria-label="Hapus pencarian" ${filters.search ? '' : 'hidden'}>${icon('close')}</button>
         </div>
-        <a class="btn btn-primary" href="#/explore">Explore Products ${icon('arrow')}</a>
+        <a class="btn btn-primary" href="#/explore">Explore Products ${icon('arrow')}<span class="sr-only">→</span></a>
       </div>
       <p class="hero-meta">${summary.total} produk • ${summary.kategori} kategori • 100% lokal</p>
     </div>
@@ -138,7 +138,7 @@ export function renderCard(product) {
   const stock = stockInfo(product.stok);
   return `<article class="card product-card">
   <div class="card-media">
-    <img src="${escapeHtml(product.imageUrl)}" alt="Ilustrasi ${escapeHtml(product.nama)}" loading="lazy" />
+    <img src="${escapeHtml(product.imageUrl)}" alt="Ilustrasi produk ${escapeHtml(product.nama)}" />
     ${product.unggulan ? `<span class="badge badge-featured">${icon('star')} Unggulan</span>` : ''}
     <span class="badge badge-category">${escapeHtml(labelKategori(product.kategori))}</span>
   </div>
@@ -149,7 +149,7 @@ export function renderCard(product) {
       <span class="card-price">${formatRupiah(product.harga)}</span>
       <span class="stock stock-${stock.tone}">${icon('dot')} ${stock.label}</span>
     </div>
-    <a class="btn btn-secondary btn-full" href="#/produk/${encodeURIComponent(product.id)}">View Details ${icon('arrow')}</a>
+    <a class="btn btn-secondary btn-full" href="#/produk/${encodeURIComponent(product.id)}">View Details ${icon('arrow')}<span class="sr-only">→</span></a>
   </div>
 </article>`;
 }
@@ -197,7 +197,7 @@ export function renderDetail(product) {
   <a class="btn btn-ghost" href="#/">${icon('back')} Kembali ke katalog</a>
   <div class="detail-layout">
     <div class="detail-media">
-      <img src="${escapeHtml(product.imageUrl)}" alt="Ilustrasi ${escapeHtml(product.nama)}" />
+      <img src="${escapeHtml(product.imageUrl)}" alt="Ilustrasi produk ${escapeHtml(product.nama)}" />
       ${product.unggulan ? `<span class="badge badge-featured">${icon('star')} Unggulan</span>` : ''}
     </div>
     <div class="detail-info">
@@ -234,12 +234,12 @@ function renderForm() {
     <div class="dialog-head"><h2 id="dialog-title">Tambah Produk</h2><button class="icon-btn" type="button" data-action="close-dialog" aria-label="Tutup form">${icon('close')}</button></div>
     <div class="form-grid">
       <div class="field field-wide" id="field-id" hidden><label for="f-id">ID</label><input id="f-id" name="id" type="text" readonly /></div>
-      <div class="field field-wide"><label for="f-nama">Nama produk</label><input id="f-nama" name="nama" type="text" maxlength="80" required /><span class="field-error" data-error-for="nama"></span></div>
-      <div class="field"><label for="f-kategori">Kategori</label><select id="f-kategori" name="kategori" required>${KATEGORI.map((k) => `<option value="${escapeHtml(k)}">${escapeHtml(labelKategori(k))}</option>`).join('')}</select><span class="field-error" data-error-for="kategori"></span></div>
-      <div class="field"><label for="f-harga">Harga (Rp)</label><input id="f-harga" name="harga" type="number" min="0" step="0.01" required /><span class="field-error" data-error-for="harga"></span></div>
-      <div class="field"><label for="f-stok">Stok</label><input id="f-stok" name="stok" type="text" inputmode="numeric" required /><span class="field-error" data-error-for="stok"></span></div>
-      <div class="field"><label for="f-imageUrl">Gambar</label><input id="f-imageUrl" name="imageUrl" type="text" placeholder="assets/... (kosong = otomatis)" /><span class="field-error" data-error-for="imageUrl"></span></div>
-      <div class="field field-wide"><label for="f-deskripsi">Deskripsi</label><textarea id="f-deskripsi" name="deskripsi" rows="3" maxlength="500" required></textarea><span class="field-error" data-error-for="deskripsi"></span></div>
+      <div class="field field-wide"><label for="f-nama">Nama produk</label><input id="f-nama" name="nama" type="text" maxlength="80" required aria-describedby="err-nama" /><span class="field-error" id="err-nama" data-error-for="nama"></span></div>
+      <div class="field"><label for="f-kategori">Kategori</label><select id="f-kategori" name="kategori" required aria-describedby="err-kategori">${KATEGORI.map((k) => `<option value="${escapeHtml(k)}">${escapeHtml(labelKategori(k))}</option>`).join('')}</select><span class="field-error" id="err-kategori" data-error-for="kategori"></span></div>
+      <div class="field"><label for="f-harga">Harga (Rp)</label><input id="f-harga" name="harga" type="number" min="0" step="0.01" required aria-describedby="err-harga" /><span class="field-error" id="err-harga" data-error-for="harga"></span></div>
+      <div class="field"><label for="f-stok">Stok</label><input id="f-stok" name="stok" type="text" inputmode="numeric" required aria-describedby="err-stok" /><span class="field-error" id="err-stok" data-error-for="stok"></span></div>
+      <div class="field"><label for="f-imageUrl">Gambar</label><input id="f-imageUrl" name="imageUrl" type="text" placeholder="assets/... (kosong = otomatis)" aria-describedby="err-imageUrl" /><span class="field-error" id="err-imageUrl" data-error-for="imageUrl"></span></div>
+      <div class="field field-wide"><label for="f-deskripsi">Deskripsi</label><textarea id="f-deskripsi" name="deskripsi" rows="3" maxlength="500" required aria-describedby="err-deskripsi"></textarea><span class="field-error" id="err-deskripsi" data-error-for="deskripsi"></span></div>
       <label class="checkbox field-wide"><input name="unggulan" type="checkbox" /> Jadikan produk unggulan</label>
     </div>
     <p class="form-error" id="form-error" role="alert" hidden></p>
@@ -281,7 +281,15 @@ export function showToast(message, tone = 'info') {
   const toast = document.createElement('div');
   toast.className = `toast toast-${tone}`;
   toast.setAttribute('role', tone === 'error' ? 'alert' : 'status');
-  toast.textContent = message;
+  const text = document.createElement('span');
+  text.textContent = message;
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.className = 'toast-close';
+  close.setAttribute('aria-label', 'Tutup notifikasi');
+  close.innerHTML = icon('close');
+  close.addEventListener('click', () => toast.remove());
+  toast.append(text, close);
   region.append(toast);
   window.setTimeout(() => toast.remove(), 4000);
 }

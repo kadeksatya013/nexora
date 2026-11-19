@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7FAF9"/><stop offset="1" stop-color="#EEF4F2"/></linearGradient></defs>
+<rect width="800" height="450" fill="url(#g)"/>
+<g stroke="#14B8A6" stroke-opacity=".14" stroke-width="1"><line x1="100" y1="0" x2="100" y2="450"/><line x1="200" y1="0" x2="200" y2="450"/><line x1="300" y1="0" x2="300" y2="450"/><line x1="400" y1="0" x2="400" y2="450"/><line x1="500" y1="0" x2="500" y2="450"/><line x1="600" y1="0" x2="600" y2="450"/><line x1="700" y1="0" x2="700" y2="450"/><line x1="800" y1="0" x2="800" y2="450"/><line x1="0" y1="90" x2="800" y2="90"/><line x1="0" y1="180" x2="800" y2="180"/><line x1="0" y1="270" x2="800" y2="270"/><line x1="0" y1="360" x2="800" y2="360"/></g>
+<g>
+    <g fill="#ffffff" fill-opacity=".8" stroke="#14B8A6" stroke-opacity=".35" stroke-width="2">
+      <rect x="200" y="52" width="110" height="80" rx="18"/><rect x="345" y="52" width="110" height="80" rx="18"/><rect x="490" y="52" width="110" height="80" rx="18"/>
+      <rect x="200" y="146" width="110" height="80" rx="18"/><rect x="345" y="146" width="110" height="80" rx="18"/><rect x="490" y="146" width="110" height="80" rx="18"/>
+      <rect x="200" y="240" width="110" height="80" rx="18"/><rect x="345" y="240" width="110" height="80" rx="18"/><rect x="490" y="240" width="110" height="80" rx="18"/>
+    </g>
+    <g fill="#14B8A6">
+      <path d="M255 84c0-10-15-12-17 0-2 12 17 24 17 24s19-12 17-24c-2-12-17-10-17 0Z"/>
+      <path d="m400 68 8 18 20 2-15 13 4 20-17-10-17 10 4-20-15-13 20-2 8-18Z"/>
+      <path d="M545 100V88a12 12 0 0 1 24 0v12l6 8h-36l6-8Z"/><circle cx="557" cy="116" r="4"/>
+      <circle cx="255" cy="186" r="14" fill="none" stroke="#14B8A6" stroke-width="5"/><path d="M255 164v-6M255 214v-6M233 186h-6M283 186h-6M239 170l-4-4M276 207l-4-4M271 170l4-4M234 207l4-4" stroke="#14B8A6" stroke-width="5" stroke-linecap="round"/>
+      <rect x="386" y="172" width="30" height="25" rx="5"/><circle cx="401" cy="184" r="7" fill="#ffffff"/>
+      <path d="M530 162h54v30h-30l-14 12v-12h-10V162Z"/>
+      <path d="m260 246-12 20h14l-6 18 20-26h-14l8-12Z"/>
+      <g><rect x="386" y="256" width="12" height="12" rx="3"/><rect x="402" y="256" width="12" height="12" rx="3"/><rect x="386" y="272" width="12" height="12" rx="3"/><rect x="402" y="272" width="12" height="12" rx="3"/></g>
+    </g>
+    <path d="m540 272 10 10 20-24" fill="none" stroke="#14B8A6" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="400" y="386" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="38" font-weight="700" fill="#0F172A">Glassmorphism Icon Pack</text>
+<text x="400" y="420" text-anchor="middle" font-family="Inter, sans-serif" font-size="19" fill="#64748B">NEXORA · ASET DIGITAL</text>
+</svg>
